@@ -398,12 +398,11 @@ How likely is this agent to grow in complexity, integrate new tools, or be maint
 
 ## 6. Wrap-Up & Reflection (5 min)
 
-1. **LO 1 check:** What is the core architectural difference between a platform like GPT Builder and a framework like LangGraph? Why does that difference matter for production use?
-2. **LO 2 check:** Name one limitation that no platform documentation will advertise, and explain why it matters for a real project decision.
-3. **LO 3 check:** Using the five-dimension framework, which platform would you select for your current role or industry context? Walk through your reasoning on at least three dimensions.
+1. What is the core architectural difference between a platform like GPT Builder and a framework like LangGraph? Why does that difference matter for production use?
+2. Name one limitation that no platform documentation will advertise, and explain why it matters for a real project decision.
+3. Using the five-dimension framework, which platform would you select for your current role or industry context? Walk through your reasoning on at least three dimensions.
 
-> Next session: **Use Cases Across Industries** — we apply the architectural knowledge from Sessions 1–4 to real-world deployments, deconstructing how agent components combine to deliver business value across healthcare, finance, operations, and more.
-
+> Next session: **Use Cases Across Industries** 
 ---
 
 ## Resources
