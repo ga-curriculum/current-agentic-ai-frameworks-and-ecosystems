@@ -231,15 +231,7 @@ Dust is an enterprise-focused platform for deploying AI assistants ("agents") co
 
 ### Ecosystem Summary
 
-| Platform | Level | Best For | Requires |
-|---|---|---|---|
-| GPT Builder | No-code | Simple assistants, rapid prototyping | Nothing |
-| Relevance AI | No-code / Low-code | Business workflows, operations teams | Basic technical literacy |
-| Flowise | Low-code | LangChain access, self-hosted deployment | Docker, some technical background |
-| n8n | Low-code | Process automation with embedded AI | Workflow design knowledge |
-| CrewAI | Code-first | Multi-agent systems, role-based delegation | Python development |
-| LangGraph | Code-first | Production agents, complex control flow | Python + ML engineering |
-| Dust | Low-code | Enterprise knowledge agents, internal assistants | Enterprise data access |
+<img width="637" height="466" alt="image" src="https://git.generalassemb.ly/user-attachments/assets/9eb01621-622f-4cea-b424-356b77061848" />
 
 ---
 
@@ -280,15 +272,7 @@ What happens when the number of users, requests, or data sources grows by 10x?
 
 How much help exists when you get stuck?
 
-| Platform | GitHub Stars (approx.) | Community | Documentation quality |
-|---|---|---|---|
-| LangGraph | High | Large (LangChain ecosystem) | Strong |
-| CrewAI | High | Active, growing | Good |
-| Flowise | High | Active open-source community | Good |
-| n8n | Very high | Large, long-established | Excellent |
-| GPT Builder | N/A (product, not OSS) | OpenAI community forums | Basic |
-| Relevance AI | N/A | Smaller, support-dependent | Moderate |
-| Dust | N/A | Enterprise-focused | Moderate |
+<img width="716" height="421" alt="image" src="https://git.generalassemb.ly/user-attachments/assets/ee7929e0-b3dd-4873-a9c6-fddfdb951e76" />
 
 ---
 
@@ -306,12 +290,7 @@ Use the following five dimensions to evaluate any agent-building platform agains
 
 What is the technical baseline of the people who will build and maintain this agent?
 
-| Team Type | Recommended Starting Point |
-|---|---|
-| Non-technical / operations | GPT Builder, Relevance AI, Dust |
-| Technical but not ML engineers | Flowise, n8n |
-| Software engineers | CrewAI, n8n, Flowise |
-| ML engineers / AI specialists | LangGraph, CrewAI |
+<img width="698" height="384" alt="image" src="https://git.generalassemb.ly/user-attachments/assets/20788951-053b-4947-bb23-cd4cb38cf13c" />
 
 Choosing a code-first framework for a non-engineering team does not produce a more capable agent — it produces an abandoned project.
 
