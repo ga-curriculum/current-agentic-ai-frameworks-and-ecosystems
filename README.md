@@ -61,7 +61,8 @@ Neither axis is better or worse in isolation — the right position depends on y
 
 ### Visual Map of the Ecosystem
 
-<img width="1536" height="1024" alt="ChatGPT Image Feb 24, 2026, 03_22_53 PM" src="https://git.generalassemb.ly/user-attachments/assets/1496c4d5-3622-469f-bbcd-c25449d1942b" />
+<img width="592" height="451" alt="image" src="https://git.generalassemb.ly/user-attachments/assets/c124539f-881f-4192-be4e-1cdd645cbaf9" />
+
 
 This map positions the major platforms across the two axes:
 - Vertical: Opinionated → Flexible
