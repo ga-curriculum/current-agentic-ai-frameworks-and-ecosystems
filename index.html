@@ -1,0 +1,986 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Agentic AI Frameworks — General Assembly BAA 4.0</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,600&family=Barlow+Condensed:wght@600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --black:#0d0d0d;--black2:#1a1a1a;--black3:#252525;--black4:#333;
+  --line:#2e2e2e;--line2:#404040;--gray-dk:#555;--gray:#888;
+  --gray-lt:#bbb;--white:#fff;
+  --GA-red:#e8333a;--GA-red2:#ff4a50;
+  --yellow:#f5c518;--green:#22c55e;--blue:#3b82f6;--purple:#a855f7;--teal:#14b8a6;
+  --r:4px;--r-lg:10px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Barlow',sans-serif;background:var(--black);color:var(--white);font-size:16px;line-height:1.6;min-height:100vh}
+::-webkit-scrollbar{width:6px;height:6px}
+::-webkit-scrollbar-track{background:var(--black2)}
+::-webkit-scrollbar-thumb{background:var(--black4);border-radius:3px}
+header{position:sticky;top:0;z-index:500;background:var(--black);border-bottom:2px solid var(--GA-red);display:flex;align-items:stretch;height:58px}
+.ga-logo{display:flex;align-items:center;gap:10px;padding:0 20px;border-right:1px solid var(--line);flex-shrink:0;cursor:pointer}
+.ga-mark{width:32px;height:32px;background:var(--GA-red);display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:800;letter-spacing:.05em;color:#fff;border-radius:2px;flex-shrink:0}
+.ga-name{font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:.06em;color:var(--gray-lt);text-transform:uppercase;line-height:1.2}
+.ga-name span{display:block;font-size:10px;color:var(--gray);font-weight:600}
+.tab-bar{display:flex;align-items:stretch;overflow-x:auto;flex:1;scrollbar-width:none}
+.tab-bar::-webkit-scrollbar{display:none}
+.tab{display:flex;align-items:center;gap:6px;padding:0 18px;font-family:'Barlow',sans-serif;font-size:13px;font-weight:600;color:var(--gray);letter-spacing:.02em;cursor:pointer;white-space:nowrap;border-bottom:3px solid transparent;transition:color .15s,border-color .15s;position:relative;top:2px}
+.tab:hover{color:var(--white)}
+.tab.active{color:var(--white);border-bottom-color:var(--GA-red)}
+.hd-end{display:flex;align-items:center;padding:0 18px;border-left:1px solid var(--line);flex-shrink:0}
+.prog-chip{background:var(--GA-red);color:#fff;font-family:'JetBrains Mono',monospace;font-size:11px;padding:4px 12px;border-radius:20px;white-space:nowrap}
+.section{display:none}
+.section.active{display:block}
+.wrap{max-width:860px;margin:0 auto;padding:48px 24px 80px}
+.eyebrow{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--GA-red);margin-bottom:10px;display:block}
+h1{font-family:'Barlow Condensed',sans-serif;font-size:clamp(2.4rem,6vw,3.8rem);font-weight:900;line-height:1.05;letter-spacing:-.01em;color:#fff;margin-bottom:16px}
+h1 .red{color:var(--GA-red)}
+h2{font-family:'Barlow Condensed',sans-serif;font-size:clamp(1.7rem,4vw,2.4rem);font-weight:800;letter-spacing:-.01em;line-height:1.1;color:#fff;margin-bottom:8px}
+h2 .red{color:var(--GA-red)}
+h3{font-size:1rem;font-weight:700;color:#fff;margin-bottom:6px}
+.lead{font-size:1.05rem;color:var(--gray-lt);line-height:1.7;margin-bottom:28px;max-width:640px}
+.body-t{font-size:.95rem;color:var(--gray-lt);line-height:1.7}
+.hr{height:1px;background:var(--line);margin:36px 0}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:12px 28px;border-radius:var(--r);font-family:'Barlow',sans-serif;font-size:.95rem;font-weight:700;cursor:pointer;border:2px solid transparent;transition:all .15s;letter-spacing:.01em;white-space:nowrap}
+.btn-red{background:var(--GA-red);color:#fff;border-color:var(--GA-red)}
+.btn-red:hover{background:var(--GA-red2);border-color:var(--GA-red2);transform:translateY(-1px)}
+.btn-green{background:var(--green);color:var(--black);border-color:var(--green)}
+.btn-green:hover{background:#16a34a;border-color:#16a34a;transform:translateY(-1px)}
+.btn-ghost{background:transparent;color:var(--gray-lt);border:2px solid var(--line2);padding:10px 20px;font-size:.88rem;font-weight:600;cursor:pointer;border-radius:var(--r);transition:all .15s}
+.btn-ghost:hover{border-color:var(--gray);color:#fff}
+.card{background:var(--black2);border:1px solid var(--line);border-radius:var(--r-lg);padding:28px;margin-bottom:16px}
+.card-rb{border-top:3px solid var(--GA-red)}
+.badge{display:inline-block;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+.b-red{background:rgba(232,51,58,.18);color:var(--GA-red)}
+.b-green{background:rgba(34,197,94,.18);color:var(--green)}
+.b-yellow{background:rgba(245,197,24,.18);color:var(--yellow)}
+@keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+.a1{animation:fadeUp .35s ease both}
+.a2{animation:fadeUp .35s .1s ease both}
+.a3{animation:fadeUp .35s .2s ease both}
+/* INTRO */
+.hero-kicker{display:inline-flex;align-items:center;gap:8px;background:var(--black3);border:1px solid var(--line);border-radius:var(--r);padding:6px 14px;margin-bottom:20px;font-size:12px;font-weight:600;color:var(--gray-lt);letter-spacing:.04em}
+.hero-kicker .dot{width:8px;height:8px;background:var(--GA-red);border-radius:50%;flex-shrink:0}
+.obj-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin-bottom:32px}
+.obj-card{background:var(--black2);border:1px solid var(--line);border-radius:var(--r-lg);padding:20px;display:flex;gap:14px;align-items:flex-start}
+.obj-num{font-family:'Barlow Condensed',sans-serif;font-size:2rem;font-weight:900;color:var(--GA-red);line-height:1;flex-shrink:0}
+.obj-body{font-size:.9rem;color:var(--gray-lt);line-height:1.55;padding-top:4px}
+.roadmap{display:flex;flex-direction:column}
+.rm-item{display:flex;align-items:flex-start;gap:16px;padding:14px 0;border-bottom:1px solid var(--line)}
+.rm-item:last-child{border-bottom:none}
+.rm-dot{width:36px;height:36px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;border:2px solid var(--line);background:var(--black3);color:var(--gray);transition:all .25s}
+.rm-dot.done{background:var(--green);border-color:var(--green);color:var(--black)}
+.rm-dot.active{background:var(--GA-red);border-color:var(--GA-red);color:#fff}
+.rm-label{font-size:.95rem;font-weight:600;color:var(--gray);transition:color .2s;padding-top:6px}
+.rm-label.active{color:#fff}
+.rm-label.done{color:var(--green);text-decoration:line-through}
+.rm-sub{font-size:.8rem;color:var(--gray-dk);margin-top:2px}
+/* FRAMEWORK EXPLORER STEPS */
+.fx-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px;margin-bottom:14px}
+.fx-step{background:var(--black2);border:2px solid var(--line);border-radius:var(--r-lg);padding:16px 12px;text-align:center;cursor:pointer;transition:all .18s}
+.fx-step:hover{border-color:var(--line2)}
+.fx-step.active{border-color:var(--GA-red);background:rgba(232,51,58,.07)}
+.fx-icon{font-size:1.6rem;margin-bottom:8px;display:block}
+.fx-label{font-size:.82rem;font-weight:700;color:var(--gray-lt)}
+.fx-step.active .fx-label{color:var(--GA-red)}
+.fx-detail{background:var(--black2);border:1px solid var(--line);border-left:4px solid var(--GA-red);border-radius:var(--r-lg);padding:20px 22px;font-size:.95rem;color:var(--gray-lt);line-height:1.7;min-height:80px;transition:all .2s;margin-bottom:22px}
+.fx-detail strong{color:#fff}
+/* CATEGORY CARDS */
+.cc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:12px;margin-bottom:24px}
+.cc{background:var(--black2);border:1px solid var(--line);border-radius:var(--r-lg);padding:22px;cursor:pointer;transition:border-color .18s,transform .18s;position:relative;overflow:hidden}
+.cc::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--GA-red);transform:scaleX(0);transform-origin:left;transition:transform .25s}
+.cc:hover::before,.cc.open::before{transform:scaleX(1)}
+.cc:hover{border-color:var(--black4);transform:translateY(-2px)}
+.cc.open{border-color:var(--GA-red)}
+.cc-num{font-family:'Barlow Condensed',sans-serif;font-size:2.2rem;font-weight:900;color:var(--GA-red);line-height:1;margin-bottom:8px}
+.cc-icon{font-size:1.8rem;margin-bottom:8px;display:block}
+.cc-body{font-size:.88rem;color:var(--gray-lt);line-height:1.6;margin-top:12px;padding-top:12px;border-top:1px solid var(--line);display:none}
+.cc.open .cc-body{display:block}
+.cc-hint{font-size:.75rem;color:var(--gray-dk);margin-top:6px;font-style:italic}
+.cc.open .cc-hint{display:none}
+/* COMPARISON TABLE */
+.cmp-table{width:100%;border-collapse:collapse;font-size:.88rem;margin-bottom:24px}
+.cmp-table th{font-family:'Barlow Condensed',sans-serif;font-weight:700;letter-spacing:.08em;text-transform:uppercase;font-size:.78rem;color:var(--gray);padding:10px 14px;border-bottom:1px solid var(--line);text-align:left;background:var(--black3)}
+.cmp-table td{padding:10px 14px;border-bottom:1px solid var(--line);color:var(--gray-lt)}
+.cmp-table tr:last-child td{border-bottom:none}
+.cmp-table td:first-child{font-weight:700;color:#fff}
+.tick{color:var(--green);font-weight:700}
+.cross{color:var(--gray-dk)}
+.part{color:var(--yellow)}
+.cmp-table tr.hl td{background:rgba(232,51,58,.05)}
+/* DRAG & DROP shared */
+.drag-pool{background:var(--black3);border:1px solid var(--line);border-radius:var(--r-lg);padding:16px;margin-bottom:18px}
+.pool-label{font-size:.75rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--gray-dk);margin-bottom:10px}
+.drag-chips{display:flex;flex-wrap:wrap;gap:8px;min-height:36px}
+.drag-chip{display:inline-flex;padding:8px 14px;border-radius:20px;background:var(--black2);border:1.5px solid var(--line2);color:var(--gray-lt);font-size:.85rem;font-weight:600;cursor:grab;user-select:none;transition:all .15s}
+.drag-chip:active{cursor:grabbing}
+.drag-chip:hover{border-color:var(--GA-red);color:#fff}
+.drag-chip.correct{background:rgba(34,197,94,.12);border-color:var(--green);color:var(--green);cursor:default}
+.drag-chip.wrong{background:rgba(232,51,58,.12);border-color:var(--GA-red);color:var(--GA-red);cursor:default}
+/* PLATFORM COMPARISON CANVAS */
+.canvas-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px}
+@media(max-width:600px){.canvas-grid{grid-template-columns:1fr}}
+.canvas-col{border-radius:var(--r-lg);overflow:hidden}
+.canvas-head{padding:14px 16px;display:flex;align-items:center;gap:10px}
+.canvas-logo{width:32px;height:32px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0}
+.canvas-name{font-family:'Barlow Condensed',sans-serif;font-size:.92rem;font-weight:800;text-transform:uppercase;letter-spacing:.06em}
+.canvas-tag{font-size:.72rem;color:rgba(255,255,255,.45);margin-top:1px}
+.canvas-body{background:var(--black2);border:1px solid var(--line);border-top:none;border-radius:0 0 var(--r-lg) var(--r-lg);padding:10px;min-height:100px;display:flex;flex-direction:column;gap:6px}
+.canvas-body.dragover{background:var(--black3)}
+.canvas-empty{font-size:.8rem;color:var(--gray-dk);font-style:italic;text-align:center;padding:16px 0}
+/* SCENARIO MATCHER */
+.scenario-list{display:flex;flex-direction:column;gap:10px;margin-bottom:18px}
+.scenario-item{background:var(--black2);border:1.5px solid var(--line);border-radius:var(--r-lg);padding:16px 18px}
+.scenario-q{font-size:.92rem;color:var(--gray-lt);line-height:1.6;margin-bottom:10px}
+.scenario-opts{display:flex;gap:6px;flex-wrap:wrap}
+.sc-opt{padding:5px 14px;border-radius:20px;font-size:.8rem;font-weight:700;cursor:pointer;border:1.5px solid var(--line2);background:var(--black3);color:var(--gray);transition:all .15s}
+.sc-opt:hover{border-color:var(--GA-red);color:#fff}
+.sc-opt.selected{border-color:var(--GA-red);background:rgba(232,51,58,.12);color:var(--GA-red)}
+.sc-opt.correct{border-color:var(--green);background:rgba(34,197,94,.12);color:var(--green);cursor:default}
+.sc-opt.wrong{border-color:var(--GA-red);background:rgba(232,51,58,.1);color:var(--GA-red);cursor:default}
+.sc-opt.reveal{border-color:var(--yellow);background:rgba(245,197,24,.1);color:var(--yellow);cursor:default}
+/* QUIZ */
+.qz-meta{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;flex-wrap:wrap;gap:8px}
+.qz-meta span{font-size:.85rem;color:var(--gray);font-weight:500}
+.prog-bar{height:4px;background:var(--black3);border-radius:2px;margin-bottom:28px;overflow:hidden}
+.prog-fill{height:100%;background:var(--GA-red);border-radius:2px;transition:width .4s ease}
+.quiz-q{font-family:'Barlow Condensed',sans-serif;font-size:1.45rem;font-weight:700;line-height:1.3;color:#fff;margin-bottom:20px;letter-spacing:-.01em}
+.q-opts{display:flex;flex-direction:column;gap:8px;margin-bottom:16px}
+.q-opt{background:var(--black2);border:2px solid var(--line);border-radius:var(--r-lg);padding:14px 18px;cursor:pointer;display:flex;align-items:flex-start;gap:14px;font-size:.95rem;color:var(--gray-lt);transition:all .16s;text-align:left;width:100%}
+.q-opt:hover:not(.disabled){border-color:var(--GA-red);color:#fff;background:rgba(232,51,58,.05)}
+.q-opt.correct{border-color:var(--green);background:rgba(34,197,94,.07);color:#fff}
+.q-opt.wrong{border-color:var(--GA-red);background:rgba(232,51,58,.08);color:#fff}
+.q-opt.disabled{cursor:default}
+.opt-k{width:30px;height:30px;border-radius:6px;flex-shrink:0;background:var(--black3);border:1.5px solid var(--line);display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:.75rem;font-weight:700;color:var(--gray);transition:all .16s}
+.q-opt.correct .opt-k{background:var(--green);border-color:var(--green);color:var(--black)}
+.q-opt.wrong .opt-k{background:var(--GA-red);border-color:var(--GA-red);color:#fff}
+.q-opt:hover:not(.disabled) .opt-k{border-color:var(--GA-red);color:var(--GA-red)}
+.fb-box{display:none;border-radius:var(--r-lg);padding:14px 18px;font-size:.92rem;line-height:1.6;margin-bottom:14px}
+.fb-box.show{display:flex;gap:10px;align-items:flex-start}
+.fb-box.ok{background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.3);color:#86efac}
+.fb-box.bad{background:rgba(232,51,58,.1);border:1px solid rgba(232,51,58,.3);color:#fca5a5}
+.fb-icon{font-size:1.1rem;flex-shrink:0}
+.qz-foot{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+/* RESULTS */
+.results-ring{position:relative;width:120px;height:120px;flex-shrink:0}
+.results-ring-txt{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.ring-pct{font-family:'Barlow Condensed',sans-serif;font-size:2rem;font-weight:900;color:#fff;line-height:1}
+.ring-sub{font-size:.7rem;color:var(--gray);letter-spacing:.1em;text-transform:uppercase;margin-top:2px}
+.score-row{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--line)}
+.score-row:last-child{border-bottom:none}
+.score-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.score-bar-wrap{width:80px;height:3px;background:var(--black3);border-radius:2px;flex-shrink:0}
+.score-bar-fill{height:100%;border-radius:2px}
+.takeaway-item{display:flex;gap:12px;padding:14px 0;border-bottom:1px solid var(--line)}
+.takeaway-item:last-child{border-bottom:none}
+.tk-num{font-family:'Barlow Condensed',sans-serif;font-size:1.6rem;font-weight:900;color:var(--GA-red);flex-shrink:0;line-height:1;padding-top:2px}
+.tk-txt{font-size:.92rem;color:var(--gray-lt);line-height:1.65}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="ga-logo" onclick="nav('intro')">
+    <div class="ga-mark">GA</div>
+    <div class="ga-name">General Assembly<span>Build AI Agents · BAA 4.0</span></div>
+  </div>
+  <div class="tab-bar">
+    <div class="tab active"  onclick="nav('intro')"    id="t-intro">⬡ Overview</div>
+    <div class="tab"         onclick="nav('why')"      id="t-why">↻ Why Frameworks</div>
+    <div class="tab"         onclick="nav('cats')"     id="t-cats">◈ Categories</div>
+    <div class="tab"         onclick="nav('canvas')"   id="t-canvas">⌖ Platform Canvas</div>
+    <div class="tab"         onclick="nav('select')"   id="t-select">⚑ Selection</div>
+    <div class="tab"         onclick="nav('quiz')"     id="t-quiz">◇ Knowledge Check</div>
+    <div class="tab"         onclick="nav('results')"  id="t-results">★ Results</div>
+  </div>
+  <div class="hd-end"><div class="prog-chip" id="progressChip">0 / 4</div></div>
+</header>
+
+<!-- ══════════════ INTRO ══════════════ -->
+<div class="section active" id="s-intro">
+  <div class="wrap">
+    <div class="a1" style="padding-bottom:40px;border-bottom:1px solid var(--line);margin-bottom:36px">
+      <div class="hero-kicker"><div class="dot"></div>Hands-On Lab &nbsp;·&nbsp; Module 4 &nbsp;·&nbsp; BAA 4.0</div>
+      <h1>Agentic AI<br/><span class="red">Frameworks</span></h1>
+      <p class="lead">Frameworks operationalize agent theory. Learn why they exist, how the four categories differ, and how to make a strategic selection — then build a Platform Comparison Canvas for the tools your team will actually use.</p>
+      <button class="btn btn-red" onclick="nav('why')">Start Lab →</button>
+    </div>
+    <span class="eyebrow">Learning Objectives</span>
+    <div class="obj-grid a2">
+      <div class="obj-card"><div class="obj-num">01</div><div class="obj-body">Explain what a framework provides and why teams use them instead of building from scratch.</div></div>
+      <div class="obj-card"><div class="obj-num">02</div><div class="obj-body">Classify the four categories of agent frameworks and identify their strengths and limitations.</div></div>
+      <div class="obj-card"><div class="obj-num">03</div><div class="obj-body">Compare GPTs Builder, Flowise, and Zapier AI across ease-of-use, best-for, and beginner-readiness.</div></div>
+      <div class="obj-card"><div class="obj-num">04</div><div class="obj-body">Select the most suitable framework for a given scenario using a structured decision process.</div></div>
+    </div>
+    <div class="hr"></div>
+    <span class="eyebrow">Your Lab Roadmap</span>
+    <div class="card a3">
+      <div class="roadmap">
+        <div class="rm-item"><div class="rm-dot active" id="dot-why">1</div><div><div class="rm-label active" id="lbl-why">Why Frameworks Exist</div><div class="rm-sub">Click each component to explore what frameworks provide vs. building from scratch</div></div></div>
+        <div class="rm-item"><div class="rm-dot" id="dot-cats">2</div><div><div class="rm-label" id="lbl-cats">Framework Categories</div><div class="rm-sub">4 types · expandable cards · use-case matching drag exercise</div></div></div>
+        <div class="rm-item"><div class="rm-dot" id="dot-canvas">3</div><div><div class="rm-label" id="lbl-canvas">Platform Comparison Canvas</div><div class="rm-sub">Drag attributes to GPTs Builder · Flowise · Zapier AI — then pick the beginner recommendation</div></div></div>
+        <div class="rm-item"><div class="rm-dot" id="dot-select">4</div><div><div class="rm-label" id="lbl-select">Framework Selection</div><div class="rm-sub">Match 6 real scenarios to the correct framework category</div></div></div>
+        <div class="rm-item"><div class="rm-dot" id="dot-quiz">5</div><div><div class="rm-label" id="lbl-quiz">Knowledge Check</div><div class="rm-sub">7 questions · frameworks, patterns, and selection logic · 70% to pass</div></div></div>
+        <div class="rm-item"><div class="rm-dot" id="dot-results">—</div><div><div class="rm-label" id="lbl-results">Your Results</div><div class="rm-sub">Score breakdown · key takeaways</div></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ WHY FRAMEWORKS ══════════════ -->
+<div class="section" id="s-why">
+  <div class="wrap">
+    <span class="eyebrow">Section 01</span>
+    <h2>Why <span class="red">Frameworks Exist</span></h2>
+    <p class="lead">Understanding agents conceptually is not enough. To build real systems, you need infrastructure. Click each component to see what a framework handles for you.</p>
+    <div class="card" style="background:rgba(232,51,58,.06);border-color:rgba(232,51,58,.2);padding:14px 18px;margin-bottom:20px">
+      <span style="font-size:.88rem;color:var(--gray-lt)">💡 <strong style="color:#fff">Key principle:</strong> Frameworks reduce complexity so teams can focus on agent <em>design</em>, not plumbing. Choose the right layer of abstraction for your team's skill set.</span>
+    </div>
+    <div class="fx-grid">
+      <div class="fx-step active" onclick="showFx(0)"><span class="fx-icon">🔄</span><div class="fx-label">Loop Orchestration</div></div>
+      <div class="fx-step" onclick="showFx(1)"><span class="fx-icon">🔌</span><div class="fx-label">Tool Integration</div></div>
+      <div class="fx-step" onclick="showFx(2)"><span class="fx-icon">💾</span><div class="fx-label">Memory Management</div></div>
+      <div class="fx-step" onclick="showFx(3)"><span class="fx-icon">📍</span><div class="fx-label">State Tracking</div></div>
+      <div class="fx-step" onclick="showFx(4)"><span class="fx-icon">🛡️</span><div class="fx-label">Error Handling</div></div>
+    </div>
+    <div class="fx-detail" id="fxDetail"><strong>LOOP ORCHESTRATION</strong> — Manages the Perceive–Reason–Act cycle automatically. Instead of wiring the loop yourself, the framework handles iteration, step routing, and stopping conditions. This is often hundreds of lines of boilerplate code — the framework makes it invisible.</div>
+    <div class="hr"></div>
+    <span class="eyebrow">Build From Scratch vs. Framework</span>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:24px">
+      <div class="card" style="padding:20px;margin-bottom:0;border-top:3px solid var(--gray-dk)">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:.78rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--gray);margin-bottom:14px">From Scratch</div>
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <div style="display:flex;justify-content:space-between;font-size:.88rem"><span style="color:var(--gray-lt)">Flexibility</span><span style="color:var(--green);font-weight:700">High</span></div>
+          <div style="display:flex;justify-content:space-between;font-size:.88rem"><span style="color:var(--gray-lt)">Complexity</span><span style="color:var(--GA-red);font-weight:700">Very High</span></div>
+          <div style="display:flex;justify-content:space-between;font-size:.88rem"><span style="color:var(--gray-lt)">Build Speed</span><span style="color:var(--GA-red);font-weight:700">Low</span></div>
+          <div style="display:flex;justify-content:space-between;font-size:.88rem"><span style="color:var(--gray-lt)">Control</span><span style="color:var(--green);font-weight:700">Full</span></div>
+        </div>
+      </div>
+      <div class="card" style="padding:20px;margin-bottom:0;border-top:3px solid var(--GA-red)">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:.78rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--GA-red);margin-bottom:14px">Framework-Based</div>
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <div style="display:flex;justify-content:space-between;font-size:.88rem"><span style="color:var(--gray-lt)">Flexibility</span><span style="color:var(--yellow);font-weight:700">Medium</span></div>
+          <div style="display:flex;justify-content:space-between;font-size:.88rem"><span style="color:var(--gray-lt)">Complexity</span><span style="color:var(--yellow);font-weight:700">Medium</span></div>
+          <div style="display:flex;justify-content:space-between;font-size:.88rem"><span style="color:var(--gray-lt)">Build Speed</span><span style="color:var(--green);font-weight:700">High</span></div>
+          <div style="display:flex;justify-content:space-between;font-size:.88rem"><span style="color:var(--gray-lt)">Control</span><span style="color:var(--yellow);font-weight:700">Partial</span></div>
+        </div>
+      </div>
+    </div>
+    <button class="btn btn-red" onclick="markDone('why');nav('cats')">Next: Framework Categories →</button>
+  </div>
+</div>
+
+<!-- ══════════════ CATEGORIES ══════════════ -->
+<div class="section" id="s-cats">
+  <div class="wrap">
+    <span class="eyebrow">Section 02</span>
+    <h2>Framework <span class="red">Categories</span></h2>
+    <p class="lead">Four types serve different architectural needs. Click each card to explore. There is no universal best — the right choice depends on your project constraints.</p>
+    <div class="cc-grid">
+      <div class="cc" onclick="toggleCC(this,'cc1')">
+        <div class="cc-num">01</div><span class="cc-icon">⚙️</span>
+        <h3>Low-Level Orchestration</h3>
+        <p style="font-size:.85rem;color:var(--gray)">LangChain · LangGraph — modular, code-first.</p>
+        <p class="cc-hint">Tap to expand ↓</p>
+        <div class="cc-body" id="cc1">Compose agents from interchangeable components with fine-grained control over every execution step. Developer-focused — requires coding skills. Supports chains, agents, graphs, and custom patterns. <strong>Best for:</strong> Complex architectures requiring maximum control and customization. Not beginner-friendly.</div>
+      </div>
+      <div class="cc" onclick="toggleCC(this,'cc2')">
+        <div class="cc-num">02</div><span class="cc-icon">🤝</span>
+        <h3>Multi-Agent Coordination</h3>
+        <p style="font-size:.85rem;color:var(--gray)">CrewAI · AutoGen — role-based agent teams.</p>
+        <p class="cc-hint">Tap to expand ↓</p>
+        <div class="cc-body" id="cc2">Each agent has a specific role, persona, and expertise. Agents can delegate sub-tasks and collaborate toward shared goals. <strong>Best for:</strong> Complex problems requiring diverse specialist perspectives — like a researcher + writer + reviewer team. Emerging production readiness.</div>
+      </div>
+      <div class="cc" onclick="toggleCC(this,'cc3')">
+        <div class="cc-num">03</div><span class="cc-icon">🤖</span>
+        <h3>Autonomous Experiment</h3>
+        <p style="font-size:.85rem;color:var(--gray)">AutoGPT — recursive, high-autonomy.</p>
+        <p class="cc-hint">Tap to expand ↓</p>
+        <div class="cc-body" id="cc3">Agent creates its own sub-tasks and executes them recursively with minimal human intervention. Hard to steer, predict, or constrain. Demonstrated what autonomous agents could do — and what could go wrong. <strong>Best for:</strong> Research and proof-of-concept only. Not production-ready.</div>
+      </div>
+      <div class="cc" onclick="toggleCC(this,'cc4')">
+        <div class="cc-num">04</div><span class="cc-icon">🎛️</span>
+        <h3>No-Code / Low-Code</h3>
+        <p style="font-size:.85rem;color:var(--gray)">GPTs Builder · Flowise · Zapier AI</p>
+        <p class="cc-hint">Tap to expand ↓</p>
+        <div class="cc-body" id="cc4">Build simple agents in minutes — drag-and-drop UI, no engineering required. Business-user friendly. Limited architecture customization — you can't modify internal agent logic deeply. <strong>Best for:</strong> Quick prototypes, simple automations, and non-technical teams. Production-ready for straightforward use cases.</div>
+      </div>
+    </div>
+    <div class="hr"></div>
+    <span class="eyebrow">Category Comparison</span>
+    <div style="overflow-x:auto;margin-bottom:20px">
+      <table class="cmp-table">
+        <thead><tr><th>Category</th><th>Flexibility</th><th>Complexity</th><th>Multi-Agent</th><th>Prod Ready</th></tr></thead>
+        <tbody>
+          <tr><td>Low-Level Orchestration</td><td class="tick">High</td><td class="tick" style="color:var(--GA-red)">High</td><td class="part">Optional</td><td class="tick">Yes</td></tr>
+          <tr><td>Multi-Agent Coordination</td><td class="part">Medium</td><td class="part">Medium</td><td class="tick">Yes</td><td class="part">Emerging</td></tr>
+          <tr><td>Autonomous Experiment</td><td class="cross">Low</td><td class="cross">Low</td><td class="cross">Limited</td><td class="cross">No</td></tr>
+          <tr class="hl"><td>No-Code / Low-Code</td><td class="cross">Low</td><td class="tick" style="color:var(--green)">Low</td><td class="cross">Limited</td><td class="tick">Yes</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- USE CASE DRAG -->
+    <span class="eyebrow">Use-Case Matcher</span>
+    <p class="lead" style="margin-bottom:14px">Drag each scenario to the framework category it fits best.</p>
+    <div class="drag-pool" id="catPool">
+      <div class="pool-label">Unassigned scenarios</div>
+      <div class="drag-chips" id="catPoolChips"></div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px" id="catZones"></div>
+    <details style="margin-bottom:14px">
+      <summary style="font-size:.82rem;color:var(--gray-dk);cursor:pointer">On mobile? Tap to assign</summary>
+      <div style="margin-top:8px;display:flex;flex-direction:column;gap:8px" id="mobileCat"></div>
+    </details>
+    <div style="display:flex;gap:10px;flex-wrap:wrap">
+      <button class="btn btn-red"   id="catCheckBtn"  onclick="checkCat()" disabled>Check Matches</button>
+      <button class="btn btn-ghost" id="catNextBtn"   onclick="markDone('cats');nav('canvas')" style="display:none">Next: Platform Canvas →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ PLATFORM CANVAS ══════════════ -->
+<div class="section" id="s-canvas">
+  <div class="wrap">
+    <span class="eyebrow">Section 03 · Lab Activity</span>
+    <h2>Platform Comparison <span class="red">Canvas</span></h2>
+    <p class="lead">Compare three no-code agent-building platforms. Drag each attribute into the correct platform column — then answer the beginner recommendation question.</p>
+    <div class="card" style="background:rgba(232,51,58,.06);border-color:rgba(232,51,58,.2);padding:14px 18px;margin-bottom:20px">
+      <span style="font-size:.88rem;color:var(--gray-lt)">🔍 <strong style="color:#fff">The three platforms:</strong> GPTs Builder (OpenAI) · Flowise (open-source) · Zapier AI (workflow automation) — all no-code, but built for very different use cases.</span>
+    </div>
+
+    <!-- Platform attribute pool -->
+    <div class="drag-pool" id="canvasPool">
+      <div class="pool-label">Unassigned platform attributes — drag to the correct platform</div>
+      <div class="drag-chips" id="canvasPoolChips"></div>
+    </div>
+
+    <!-- Platform columns -->
+    <div class="canvas-grid" id="canvasCols"></div>
+
+    <details style="margin-bottom:14px">
+      <summary style="font-size:.82rem;color:var(--gray-dk);cursor:pointer">On mobile? Tap to assign</summary>
+      <div style="margin-top:8px;display:flex;flex-direction:column;gap:8px" id="mobileCanvas"></div>
+    </details>
+
+    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:32px">
+      <button class="btn btn-red"   id="canvasCheckBtn"  onclick="checkCanvas()" disabled>Check Canvas</button>
+      <button class="btn btn-ghost" id="canvasNextBtn"   style="display:none" onclick="showRecommend()">Continue →</button>
+    </div>
+
+    <!-- Recommendation question -->
+    <div id="recommendWrap" style="display:none">
+      <div class="hr"></div>
+      <span class="eyebrow">Beginner Recommendation</span>
+      <h2 style="margin-bottom:12px">Which platform would you <span class="red">recommend</span>?</h2>
+      <p class="lead" style="margin-bottom:18px">A non-technical product manager wants to build their first agent — a simple FAQ bot that answers questions about their company's return policy. Which platform is the right starting point?</p>
+      <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:20px" id="recOpts"></div>
+      <div class="fb-box" id="recFB" style="margin-bottom:20px"></div>
+      <button class="btn btn-ghost" id="canvasFinalBtn" onclick="markDone('canvas');nav('select')" style="display:none">Next: Framework Selection →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ SELECTION ══════════════ -->
+<div class="section" id="s-select">
+  <div class="wrap">
+    <span class="eyebrow">Section 04</span>
+    <h2>Framework <span class="red">Selection</span></h2>
+    <p class="lead">Architecture follows constraints — not preferences. For each scenario, select the framework category that best fits. Tap a scenario header to reveal the rationale after answering.</p>
+    <div class="card" style="background:rgba(245,197,24,.05);border-color:rgba(245,197,24,.2);padding:14px 18px;margin-bottom:20px">
+      <span style="font-size:.88rem;color:var(--gray-lt)">⚠️ <strong style="color:#fff">Common mistake:</strong> Choosing a framework before defining architecture. The tool should serve the design — not the other way around.</span>
+    </div>
+    <div class="scenario-list" id="scenarioList"></div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap">
+      <button class="btn btn-red"   id="selectCheckBtn"  onclick="checkSelect()" disabled>Check Selections</button>
+      <button class="btn btn-ghost" id="selectNextBtn"   onclick="markDone('select');nav('quiz')" style="display:none">Next: Knowledge Check →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ QUIZ ══════════════ -->
+<div class="section" id="s-quiz">
+  <div class="wrap">
+    <span class="eyebrow">Section 05</span>
+    <h2>Knowledge <span class="red">Check</span></h2>
+    <p class="lead">Test your understanding. You need 70% or higher to mark this section complete.</p>
+    <div id="quizActive">
+      <div class="qz-meta"><span id="qMeta">Question 1 of 7</span><span id="qScoreTxt">Score: 0 / 0</span></div>
+      <div class="prog-bar"><div class="prog-fill" id="qProg" style="width:0%"></div></div>
+      <div class="card card-rb">
+        <div class="quiz-q" id="quizQ"></div>
+        <div class="q-opts" id="quizOpts"></div>
+        <div class="fb-box" id="quizFB"></div>
+        <div class="qz-foot">
+          <button class="btn btn-red" id="qNextBtn" onclick="nextQ()" style="display:none">Continue →</button>
+          <div style="font-size:.85rem;color:var(--gray);font-family:'JetBrains Mono',monospace" id="qz-s"></div>
+        </div>
+      </div>
+    </div>
+    <div id="quizDone" style="display:none">
+      <div class="card card-rb">
+        <h3 style="font-size:1.2rem;margin-bottom:8px">Quiz Complete <span id="qBadge"></span></h3>
+        <p class="body-t" style="margin-bottom:20px" id="qMsg"></p>
+        <button class="btn btn-green" onclick="markDone('quiz');buildResults();nav('results')">See Your Results →</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ RESULTS ══════════════ -->
+<div class="section" id="s-results">
+  <div class="wrap">
+    <span class="eyebrow">Your Results</span>
+    <h2>Lab <span class="red">Complete</span></h2>
+    <div id="resultsBody"></div>
+  </div>
+</div>
+
+<script>
+// ─── Nav ──────────────────────────────────────────────────────────────────────
+const ALL_SECS=['intro','why','cats','canvas','select','quiz','results'];
+let completed=new Set(), sectionScores={};
+
+function nav(id){
+  ALL_SECS.forEach(s=>{
+    document.getElementById('s-'+s).classList.remove('active');
+    const t=document.getElementById('t-'+s);
+    if(t) t.classList.remove('active');
+  });
+  document.getElementById('s-'+id).classList.add('active');
+  const t=document.getElementById('t-'+id);
+  if(t) t.classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+  if(id==='cats'   &&!catBuilt)    buildCats();
+  if(id==='canvas' &&!canvasBuilt) buildCanvas();
+  if(id==='select' &&!selectBuilt) buildSelect();
+  if(id==='quiz'   &&!quizStarted) initQuiz();
+}
+
+function markDone(key){
+  completed.add(key);
+  document.getElementById('progressChip').textContent=completed.size+' / 4';
+  const d=document.getElementById('dot-'+key);
+  const l=document.getElementById('lbl-'+key);
+  if(d){d.className='rm-dot done';d.textContent='✓';}
+  if(l){l.className='rm-label done';}
+}
+
+// ─── WHY FRAMEWORKS ───────────────────────────────────────────────────────────
+const FX_DATA=[
+  {t:'<strong>LOOP ORCHESTRATION</strong> — Manages the Perceive–Reason–Act cycle automatically. Instead of wiring the loop yourself, the framework handles iteration, step routing, and stopping conditions — often hundreds of lines of boilerplate code made invisible.'},
+  {t:'<strong>TOOL INTEGRATION</strong> — Pre-built connectors to APIs, databases, web search, code executors, and SaaS services. Without a framework, every tool requires custom auth, error handling, and schema validation. Frameworks give you a standard interface for all of them.'},
+  {t:'<strong>MEMORY MANAGEMENT</strong> — Short-term (current context), long-term (vector stores, databases), and task memory (progress tracking) handled as first-class abstractions. Frameworks decide what to include in the LLM context window so you don\'t have to.'},
+  {t:'<strong>STATE TRACKING</strong> — Monitors where the agent is in its execution flow. Knows which steps have run, which tools were called, what outputs were returned. This makes debugging, replay, and auditability possible.'},
+  {t:'<strong>ERROR HANDLING</strong> — Retry logic, fallbacks, graceful degradation. When a tool call fails or the LLM returns something malformed, the framework catches it and decides: retry, escalate, or terminate gracefully — instead of crashing silently.'},
+];
+
+function showFx(i){
+  document.querySelectorAll('.fx-step').forEach((el,idx)=>el.classList.toggle('active',idx===i));
+  document.getElementById('fxDetail').innerHTML=FX_DATA[i].t;
+}
+
+// ─── CATEGORY CARDS ───────────────────────────────────────────────────────────
+function toggleCC(card,id){
+  const isOpen=card.classList.contains('open');
+  document.querySelectorAll('.cc').forEach(c=>c.classList.remove('open'));
+  if(!isOpen) card.classList.add('open');
+}
+
+// ─── CATEGORY DRAG ────────────────────────────────────────────────────────────
+const CAT_ZONES=[
+  {id:'lowlevel', label:'Low-Level Orchestration', icon:'⚙️', color:'#3b82f6', bg:'rgba(59,130,246,0.12)'},
+  {id:'multiagent',label:'Multi-Agent Coordination',icon:'🤝', color:'#a855f7', bg:'rgba(168,85,247,0.12)'},
+  {id:'nocode',   label:'No-Code / Low-Code',       icon:'🎛️', color:'#22c55e', bg:'rgba(34,197,94,0.12)'},
+  {id:'autoexp',  label:'Autonomous Experiment',     icon:'🤖', color:'#f5c518', bg:'rgba(245,197,24,0.10)'},
+];
+
+const CAT_ITEMS=[
+  {id:'u1', text:'Build a content pipeline: researcher finds sources, writer drafts, reviewer edits', answer:'multiagent'},
+  {id:'u2', text:'Automate a Slack notification whenever a new row is added to Google Sheets',       answer:'nocode'},
+  {id:'u3', text:'Build a custom LLM graph where each node has a different tool and branching logic', answer:'lowlevel'},
+  {id:'u4', text:'Let an agent independently search the web and create its own sub-tasks with no oversight', answer:'autoexp'},
+  {id:'u5', text:'A non-technical team needs a simple chatbot for internal HR FAQs in one afternoon', answer:'nocode'},
+  {id:'u6', text:'Coordinate a team of financial analyst, risk assessor, and report writer agents',   answer:'multiagent'},
+  {id:'u7', text:'Fine-grained control over every LLM call, retry policy, and tool schema in production', answer:'lowlevel'},
+  {id:'u8', text:'Prove a concept: can an AI autonomously plan and book a complex multi-stop trip?',  answer:'autoexp'},
+].sort(()=>Math.random()-.5);
+
+let catBuilt=false, catPlacements={}, catChecked=false;
+
+function buildCats(){
+  catBuilt=true;
+  const pool=document.getElementById('catPoolChips');
+  const mob=document.getElementById('mobileCat');
+  CAT_ITEMS.forEach(item=>{
+    pool.appendChild(makeCatChip(item));
+    const row=document.createElement('div');
+    row.style.cssText='padding:10px;background:var(--black2);border-radius:4px;border:1px solid var(--line)';
+    const lbl=document.createElement('div');
+    lbl.style.cssText='font-size:.88rem;color:var(--gray-lt);margin-bottom:6px;line-height:1.4';
+    lbl.textContent=item.text;
+    const btns=document.createElement('div');
+    btns.style.cssText='display:flex;gap:4px;flex-wrap:wrap';
+    CAT_ZONES.forEach(z=>{
+      const b=document.createElement('button');
+      b.style.cssText=`padding:3px 8px;border-radius:3px;border:1.5px solid ${z.color};background:transparent;font-size:.75rem;cursor:pointer;color:${z.color};font-weight:700`;
+      b.textContent=z.label;
+      b.addEventListener('click',()=>mobCatAssign(item.id,z.id));
+      btns.appendChild(b);
+    });
+    row.appendChild(lbl); row.appendChild(btns); mob.appendChild(row);
+  });
+  const grid=document.getElementById('catZones');
+  CAT_ZONES.forEach(z=>{
+    const zone=document.createElement('div');
+    zone.style.border=`1px solid ${z.color}30`;
+    zone.style.borderRadius='var(--r-lg)';
+    zone.style.overflow='hidden';
+    const head=document.createElement('div');
+    head.style.cssText=`padding:11px 14px;background:${z.bg};display:flex;align-items:center;gap:8px`;
+    head.innerHTML=`<span style="font-size:1rem">${z.icon}</span><span style="font-family:'Barlow Condensed',sans-serif;font-size:.85rem;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:${z.color}">${z.label}</span>`;
+    const body=document.createElement('div');
+    body.id='catzone-'+z.id;
+    body.style.cssText='background:var(--black2);border:1px solid var(--line);border-top:none;border-radius:0 0 var(--r-lg) var(--r-lg);padding:10px;min-height:80px;display:flex;flex-wrap:wrap;gap:7px;align-content:flex-start';
+    body.innerHTML='<span style="font-size:.8rem;color:var(--gray-dk);font-style:italic;width:100%;text-align:center;padding:10px 0">Drop here</span>';
+    body.addEventListener('dragover',e=>{e.preventDefault();body.style.background='var(--black3)';});
+    body.addEventListener('dragleave',()=>body.style.background='var(--black2)');
+    body.addEventListener('drop',e=>{
+      e.preventDefault(); body.style.background='var(--black2)';
+      const id=e.dataTransfer.getData('text/plain');
+      if(catChecked) return;
+      catPlacements[id]=z.id;
+      const chip=document.getElementById('cchip-'+id);
+      if(chip) chip.parentNode.removeChild(chip);
+      const emp=body.querySelector('span[style*="italic"]');
+      if(emp) emp.remove();
+      body.appendChild(makeCatChip(CAT_ITEMS.find(x=>x.id===id)));
+      updateCatBtn();
+    });
+    zone.appendChild(head); zone.appendChild(body); grid.appendChild(zone);
+  });
+}
+
+function makeCatChip(item){
+  const c=document.createElement('div');
+  c.className='drag-chip'; c.id='cchip-'+item.id;
+  c.textContent=item.text;
+  c.setAttribute('draggable','true');
+  c.addEventListener('dragstart',e=>e.dataTransfer.setData('text/plain',item.id));
+  return c;
+}
+
+function mobCatAssign(itemId,zoneId){
+  catPlacements[itemId]=zoneId;
+  const chip=document.getElementById('cchip-'+itemId);
+  if(chip) chip.parentNode.removeChild(chip);
+  const body=document.getElementById('catzone-'+zoneId);
+  if(body){const emp=body.querySelector('span[style*="italic"]');if(emp)emp.remove();body.appendChild(makeCatChip(CAT_ITEMS.find(x=>x.id===itemId)));}
+  updateCatBtn();
+}
+
+function updateCatBtn(){
+  const all=CAT_ITEMS.every(i=>catPlacements[i.id]);
+  document.getElementById('catCheckBtn').disabled=!all;
+}
+
+function checkCat(){
+  catChecked=true;
+  let correct=0;
+  CAT_ITEMS.forEach(item=>{
+    const chip=document.getElementById('cchip-'+item.id);
+    if(!chip) return;
+    if(catPlacements[item.id]===item.answer){chip.classList.add('correct');correct++;}
+    else chip.classList.add('wrong');
+  });
+  sectionScores.cats={earned:correct,possible:CAT_ITEMS.length};
+  document.getElementById('catCheckBtn').style.display='none';
+  document.getElementById('catNextBtn').style.display='inline-flex';
+}
+
+// ─── PLATFORM CANVAS ─────────────────────────────────────────────────────────
+const PLATFORMS=[
+  {id:'gpts',  name:'GPTs Builder',  tag:'OpenAI · ChatGPT native', logo:'🤖', color:'#22c55e', bg:'rgba(34,197,94,0.14)'},
+  {id:'flowise',name:'Flowise',      tag:'Open-source · self-hostable',logo:'🌊',color:'#3b82f6', bg:'rgba(59,130,246,0.14)'},
+  {id:'zapier', name:'Zapier AI',    tag:'Workflow automation · 5,000+ apps',logo:'⚡',color:'#f5c518',bg:'rgba(245,197,24,0.14)'},
+];
+
+const CANVAS_ITEMS=[
+  // GPTs Builder
+  {id:'p1', text:'Built directly into ChatGPT — zero separate account setup needed',          answer:'gpts'},
+  {id:'p2', text:'Best for simple Q&A and document-retrieval agents with no code',             answer:'gpts'},
+  {id:'p3', text:'Locked into OpenAI ecosystem — no choice of underlying LLM',                 answer:'gpts'},
+  {id:'p4', text:'Easiest possible starting point for a non-technical first-time builder',     answer:'gpts'},
+  // Flowise
+  {id:'p5', text:'Visual node-and-edge canvas for building LLM chains and agent flows',        answer:'flowise'},
+  {id:'p6', text:'Open-source — can be self-hosted to keep sensitive data on-premise',         answer:'flowise'},
+  {id:'p7', text:'Supports multiple LLM providers including local and open-source models',     answer:'flowise'},
+  {id:'p8', text:'More setup required than GPTs Builder but far more customizable',            answer:'flowise'},
+  // Zapier AI
+  {id:'p9', text:'Best for connecting 5,000+ business apps with an AI-powered trigger/action', answer:'zapier'},
+  {id:'p10',text:'Designed for workflow automation — not deep multi-step reasoning',            answer:'zapier'},
+  {id:'p11',text:'No coding required — drag-and-drop trigger, filter, and action flows',       answer:'zapier'},
+  {id:'p12',text:'Ideal when the agent must touch Gmail, Slack, Sheets, and CRM in one flow',  answer:'zapier'},
+].sort(()=>Math.random()-.5);
+
+let canvasBuilt=false, canvasPlacements={}, canvasChecked=false;
+
+function buildCanvas(){
+  canvasBuilt=true;
+  const pool=document.getElementById('canvasPoolChips');
+  const mob=document.getElementById('mobileCanvas');
+  CANVAS_ITEMS.forEach(item=>{
+    pool.appendChild(makePChip(item));
+    const row=document.createElement('div');
+    row.style.cssText='padding:10px;background:var(--black2);border-radius:4px;border:1px solid var(--line)';
+    const lbl=document.createElement('div');
+    lbl.style.cssText='font-size:.88rem;color:var(--gray-lt);margin-bottom:6px;line-height:1.4';
+    lbl.textContent=item.text;
+    const btns=document.createElement('div');
+    btns.style.cssText='display:flex;gap:4px;flex-wrap:wrap';
+    PLATFORMS.forEach(p=>{
+      const b=document.createElement('button');
+      b.style.cssText=`padding:3px 8px;border-radius:3px;border:1.5px solid ${p.color};background:transparent;font-size:.75rem;cursor:pointer;color:${p.color};font-weight:700`;
+      b.textContent=p.name;
+      b.addEventListener('click',()=>mobPAssign(item.id,p.id));
+      btns.appendChild(b);
+    });
+    row.appendChild(lbl); row.appendChild(btns); mob.appendChild(row);
+  });
+  const grid=document.getElementById('canvasCols');
+  PLATFORMS.forEach(p=>{
+    const col=document.createElement('div');
+    col.className='canvas-col';
+    col.style.border=`1px solid ${p.color}30`;
+    const head=document.createElement('div');
+    head.className='canvas-head'; head.style.background=p.bg;
+    head.innerHTML=`<div class="canvas-logo" style="background:${p.color}22">${p.logo}</div><div><div class="canvas-name" style="color:${p.color}">${p.name}</div><div class="canvas-tag">${p.tag}</div></div>`;
+    const body=document.createElement('div');
+    body.className='canvas-body'; body.id='pzone-'+p.id;
+    body.innerHTML='<span class="canvas-empty">Drop attributes here</span>';
+    body.addEventListener('dragover',e=>{e.preventDefault();body.classList.add('dragover');});
+    body.addEventListener('dragleave',()=>body.classList.remove('dragover'));
+    body.addEventListener('drop',e=>{
+      e.preventDefault(); body.classList.remove('dragover');
+      const id=e.dataTransfer.getData('text/plain');
+      if(canvasChecked) return;
+      canvasPlacements[id]=p.id;
+      const chip=document.getElementById('pchip-'+id);
+      if(chip) chip.parentNode.removeChild(chip);
+      const emp=body.querySelector('.canvas-empty');
+      if(emp) emp.remove();
+      body.appendChild(makePChip(CANVAS_ITEMS.find(x=>x.id===id)));
+      updateCanvasBtn();
+    });
+    col.appendChild(head); col.appendChild(body); grid.appendChild(col);
+  });
+}
+
+function makePChip(item){
+  const c=document.createElement('div');
+  c.className='drag-chip'; c.id='pchip-'+item.id;
+  c.style.cssText='font-size:.8rem;line-height:1.4;padding:7px 12px';
+  c.textContent=item.text;
+  c.setAttribute('draggable','true');
+  c.addEventListener('dragstart',e=>e.dataTransfer.setData('text/plain',item.id));
+  return c;
+}
+
+function mobPAssign(itemId,platformId){
+  canvasPlacements[itemId]=platformId;
+  const chip=document.getElementById('pchip-'+itemId);
+  if(chip) chip.parentNode.removeChild(chip);
+  const body=document.getElementById('pzone-'+platformId);
+  if(body){const emp=body.querySelector('.canvas-empty');if(emp)emp.remove();body.appendChild(makePChip(CANVAS_ITEMS.find(x=>x.id===itemId)));}
+  updateCanvasBtn();
+}
+
+function updateCanvasBtn(){
+  const all=CANVAS_ITEMS.every(i=>canvasPlacements[i.id]);
+  document.getElementById('canvasCheckBtn').disabled=!all;
+}
+
+function checkCanvas(){
+  canvasChecked=true;
+  let correct=0;
+  CANVAS_ITEMS.forEach(item=>{
+    const chip=document.getElementById('pchip-'+item.id);
+    if(!chip) return;
+    if(canvasPlacements[item.id]===item.answer){chip.classList.add('correct');correct++;}
+    else chip.classList.add('wrong');
+  });
+  sectionScores.canvas={earned:correct,possible:CANVAS_ITEMS.length};
+  document.getElementById('canvasCheckBtn').style.display='none';
+  document.getElementById('canvasNextBtn').style.display='inline-flex';
+}
+
+function showRecommend(){
+  document.getElementById('canvasNextBtn').style.display='none';
+  document.getElementById('recommendWrap').style.display='block';
+  window.scrollTo({top:document.getElementById('recommendWrap').offsetTop-80,behavior:'smooth'});
+  const opts=document.getElementById('recOpts');
+  PLATFORMS.forEach(p=>{
+    const btn=document.createElement('button');
+    btn.style.cssText=`display:flex;align-items:center;gap:14px;padding:14px 18px;border-radius:var(--r-lg);border:2px solid var(--line);background:var(--black2);cursor:pointer;text-align:left;width:100%;font-family:'Barlow',sans-serif;transition:all .15s`;
+    btn.innerHTML=`<span style="font-size:1.4rem">${p.logo}</span><div><div style="font-size:.95rem;font-weight:700;color:#fff">${p.name}</div><div style="font-size:.82rem;color:var(--gray-lt)">${p.tag}</div></div>`;
+    btn.addEventListener('mouseenter',()=>btn.style.borderColor=p.color);
+    btn.addEventListener('mouseleave',()=>{if(!recAnswered)btn.style.borderColor='var(--line)';});
+    btn.addEventListener('click',()=>answerRec(p.id,btn,p.color));
+    opts.appendChild(btn);
+  });
+}
+
+let recAnswered=false;
+function answerRec(id,btn,color){
+  if(recAnswered) return; recAnswered=true;
+  const correct=id==='gpts';
+  btn.style.borderColor=correct?'var(--green)':'var(--GA-red)';
+  btn.style.background=correct?'rgba(34,197,94,.08)':'rgba(232,51,58,.08)';
+  const fb=document.getElementById('recFB');
+  fb.className='fb-box show '+(correct?'ok':'bad');
+  fb.innerHTML=correct
+    ?'<span class="fb-icon">✓</span><span><strong>GPTs Builder is the right answer.</strong> It requires zero setup, lives inside ChatGPT where the PM already works, and handles simple document Q&A out of the box. The PM can build, test, and iterate in one afternoon with no engineering help.</span>'
+    :'<span class="fb-icon">✗</span><span><strong>GPTs Builder is the best fit here.</strong> It requires zero setup, lives inside ChatGPT where the PM already works, and handles simple document Q&A out of the box — no engineering required, no self-hosting, no triggers to configure.</span>';
+  if(correct && sectionScores.canvas) sectionScores.canvas.earned = (sectionScores.canvas.earned||0)+1, sectionScores.canvas.possible = (sectionScores.canvas.possible||0)+1;
+  else if(sectionScores.canvas) sectionScores.canvas.possible = (sectionScores.canvas.possible||0)+1;
+  document.getElementById('canvasFinalBtn').style.display='inline-flex';
+}
+
+// ─── FRAMEWORK SELECTION ──────────────────────────────────────────────────────
+const SCENARIOS=[
+  {q:'A startup needs to ship a customer support chatbot for their website by Friday. The team has no engineers available.',
+   opts:['Low-Level Orchestration','Multi-Agent Coordination','No-Code / Low-Code','Autonomous Experiment'],
+   ans:2, exp:'No-Code / Low-Code wins here. The constraint is speed and no engineering resources. GPTs Builder or Zapier AI can have this live in hours.'},
+  {q:'A legal firm wants to build an agent that coordinates a case researcher, contract drafter, and compliance reviewer across a complex matter.',
+   opts:['Low-Level Orchestration','Multi-Agent Coordination','No-Code / Low-Code','Autonomous Experiment'],
+   ans:1, exp:'Multi-Agent Coordination (CrewAI / AutoGen) is designed for exactly this — role-based specialists collaborating on a shared complex goal with delegation and review cycles.'},
+  {q:'A platform engineering team needs precise control over every LLM call, retry policy, and custom tool schema in a production medical records system.',
+   opts:['Low-Level Orchestration','Multi-Agent Coordination','No-Code / Low-Code','Autonomous Experiment'],
+   ans:0, exp:'Low-Level Orchestration (LangChain / LangGraph) gives the fine-grained control required. Security-critical systems need explicit, auditable execution paths — not black-box orchestration.'},
+  {q:'A researcher wants to explore whether an AI can autonomously plan a 10-step marketing campaign end-to-end with minimal human direction.',
+   opts:['Low-Level Orchestration','Multi-Agent Coordination','No-Code / Low-Code','Autonomous Experiment'],
+   ans:3, exp:'Autonomous Experiment frameworks fit this exploration use case. Note: these are not production-ready — this is research into what\'s possible, with the understanding that results may be unpredictable.'},
+  {q:'An ops manager wants to trigger a Slack message whenever a Salesforce deal is marked "Closed Won" — using an AI step to generate a personalized congrats message.',
+   opts:['Low-Level Orchestration','Multi-Agent Coordination','No-Code / Low-Code','Autonomous Experiment'],
+   ans:2, exp:'Zapier AI is the right tool. This is exactly the trigger-action pattern with an AI step it\'s built for. No engineering, 5,000+ app connectors, done in 20 minutes.'},
+  {q:'A fintech company needs an agent that dynamically branches its execution path based on risk scores returned from three different APIs, with full audit logging.',
+   opts:['Low-Level Orchestration','Multi-Agent Coordination','No-Code / Low-Code','Autonomous Experiment'],
+   ans:0, exp:'Low-Level Orchestration (LangGraph specifically) supports graph-based execution with dynamic branching, conditional edges, and state persistence — exactly what compliance-heavy fintech systems require.'},
+];
+
+let selectBuilt=false, selectAnswers={}, selectChecked=false;
+
+function buildSelect(){
+  selectBuilt=true;
+  const list=document.getElementById('scenarioList');
+  SCENARIOS.forEach((sc,i)=>{
+    const item=document.createElement('div');
+    item.className='scenario-item'; item.id='sc-'+i;
+    const q=document.createElement('div');
+    q.className='scenario-q'; q.innerHTML=`<strong style="color:var(--GA-red)">${i+1}.</strong> ${sc.q}`;
+    const opts=document.createElement('div');
+    opts.className='scenario-opts';
+    sc.opts.forEach((o,j)=>{
+      const btn=document.createElement('div');
+      btn.className='sc-opt'; btn.dataset.val=j;
+      btn.textContent=o;
+      btn.addEventListener('click',()=>{
+        if(selectChecked) return;
+        selectAnswers[i]=j;
+        opts.querySelectorAll('.sc-opt').forEach(b=>b.classList.remove('selected'));
+        btn.classList.add('selected');
+        updateSelectBtn();
+      });
+      opts.appendChild(btn);
+    });
+    item.appendChild(q); item.appendChild(opts); list.appendChild(item);
+  });
+}
+
+function updateSelectBtn(){
+  const all=Object.keys(selectAnswers).length===SCENARIOS.length;
+  document.getElementById('selectCheckBtn').disabled=!all;
+}
+
+function checkSelect(){
+  selectChecked=true;
+  let correct=0;
+  SCENARIOS.forEach((sc,i)=>{
+    const item=document.getElementById('sc-'+i);
+    const opts=item.querySelectorAll('.sc-opt');
+    const chosen=selectAnswers[i];
+    opts.forEach((btn,j)=>{
+      if(j===sc.ans) btn.classList.add('correct');
+      else if(j===chosen&&chosen!==sc.ans) btn.classList.add('wrong');
+    });
+    if(chosen===sc.ans) correct++;
+    // append explanation
+    const exp=document.createElement('div');
+    exp.style.cssText='margin-top:10px;padding:10px 12px;border-radius:var(--r);background:var(--black3);font-size:.82rem;color:var(--gray-lt);line-height:1.55;border-left:3px solid '+(chosen===sc.ans?'var(--green)':'var(--GA-red)');
+    exp.innerHTML=`<strong style="color:${chosen===sc.ans?'var(--green)':'var(--GA-red)'}">${chosen===sc.ans?'Correct. ':'Not quite. '}</strong>${sc.exp}`;
+    item.appendChild(exp);
+  });
+  sectionScores.select={earned:correct,possible:SCENARIOS.length};
+  document.getElementById('selectCheckBtn').style.display='none';
+  document.getElementById('selectNextBtn').style.display='inline-flex';
+}
+
+// ─── QUIZ ─────────────────────────────────────────────────────────────────────
+const QUESTIONS=[
+  {q:'What is the PRIMARY reason teams use an agent framework instead of building from scratch?',
+   opts:['Frameworks are always cheaper','Frameworks provide loop orchestration, tool integration, memory, and error handling so teams focus on design','Frameworks guarantee better LLM outputs','Frameworks remove the need for security design'],
+   ans:1,
+   ok:'Correct! Frameworks handle the infrastructure plumbing — loop, tools, memory, errors — so teams can focus on agent design, not boilerplate.',
+   bad:'Not quite. Frameworks provide the core infrastructure components (loop orchestration, tool connectors, memory, error handling) so the team focuses on design, not plumbing.'},
+  {q:'Which framework category offers the HIGHEST flexibility but also the HIGHEST complexity?',
+   opts:['No-Code / Low-Code','Autonomous Experiment','Multi-Agent Coordination','Low-Level Orchestration'],
+   ans:3,
+   ok:'Correct! Low-Level Orchestration (LangChain, LangGraph) gives you maximum control and flexibility — at the cost of requiring engineering skill and significant development complexity.',
+   bad:'Not quite. Low-Level Orchestration (LangChain, LangGraph) has the highest flexibility AND complexity — it\'s built for engineers who need fine-grained control.'},
+  {q:'Flowise differs from GPTs Builder primarily because it:',
+   opts:['Is more expensive','Requires Python skills to use','Is open-source and supports multiple LLM providers including self-hosted models','Only works with OpenAI models'],
+   ans:2,
+   ok:'Correct! Flowise is open-source, self-hostable, and supports multiple LLM providers — including local models. GPTs Builder is locked to OpenAI\'s ecosystem.',
+   bad:'Not quite. Flowise\'s key differentiators are being open-source (self-hostable for privacy) and supporting multiple LLM providers beyond OpenAI.'},
+  {q:'A team needs to coordinate a researcher agent, a writer agent, and a reviewer agent on a shared deliverable. Which framework category fits best?',
+   opts:['Low-Level Orchestration','No-Code / Low-Code','Multi-Agent Coordination','Autonomous Experiment'],
+   ans:2,
+   ok:'Correct! Multi-Agent Coordination frameworks (CrewAI, AutoGen) are designed for role-based specialist agents collaborating and delegating toward shared goals.',
+   bad:'Not quite. Multi-Agent Coordination is built for exactly this — role-based agents with delegation logic and collaborative workflows.'},
+  {q:'Which architectural pattern is MOST predictable and easiest to debug?',
+   opts:['Graph-Based Orchestration','Agent Loop System','Multi-Agent Collaboration','Chain-Based System'],
+   ans:3,
+   ok:'Correct! Chain-based systems are deterministic — the same input always produces the same execution path, making them straightforward to trace and debug.',
+   bad:'Not quite. Chain-based systems are the most predictable — linear, deterministic, same input always produces the same execution path.'},
+  {q:'Zapier AI is the WRONG choice when:',
+   opts:['You need to connect Gmail, Slack, and Sheets in one workflow','The team has no engineers','You need deep multi-step reasoning with dynamic branching logic','The task involves a simple trigger-action pattern'],
+   ans:2,
+   ok:'Correct! Zapier AI is built for workflow automation — trigger/action patterns connecting SaaS apps. Deep reasoning, dynamic branching, and complex decision logic require a different framework category.',
+   bad:'Not quite. Zapier AI is built for trigger-action automation, not deep multi-step reasoning or dynamic decision branching. That requires Low-Level Orchestration.'},
+  {q:'What is the most common framework selection mistake according to the material?',
+   opts:['Using open-source tools','Choosing a framework before defining architecture','Not using the most expensive framework','Avoiding multi-agent systems'],
+   ans:1,
+   ok:'Correct! "Choose a framework before defining architecture" is the most common mistake. The tool should serve the design — not the other way around.',
+   bad:'Not quite. The most common mistake is selecting a framework before defining the architecture. The tool must serve the design, not constrain it.'},
+];
+
+let qIdx=0,qScore=0,quizStarted=false,qAnswered=false;
+
+function initQuiz(){quizStarted=true;qIdx=0;qScore=0;showQ();}
+function showQ(){
+  qAnswered=false;
+  const q=QUESTIONS[qIdx];
+  document.getElementById('qProg').style.width=(qIdx/QUESTIONS.length*100)+'%';
+  document.getElementById('qMeta').textContent='Question '+(qIdx+1)+' of '+QUESTIONS.length;
+  document.getElementById('qScoreTxt').textContent='Score: '+qScore+' / '+qIdx;
+  document.getElementById('quizQ').textContent=q.q;
+  document.getElementById('quizFB').className='fb-box';
+  document.getElementById('quizFB').innerHTML='';
+  document.getElementById('qNextBtn').style.display='none';
+  const L=['A','B','C','D'];
+  document.getElementById('quizOpts').innerHTML=q.opts.map((o,i)=>
+    `<button class="q-opt" onclick="answerQ(${i})" id="opt${i}"><div class="opt-k">${L[i]}</div>${o}</button>`
+  ).join('');
+}
+function answerQ(i){
+  if(qAnswered) return; qAnswered=true;
+  const q=QUESTIONS[qIdx]; const ok=i===q.ans;
+  if(ok) qScore++;
+  document.querySelectorAll('.q-opt').forEach((el,idx)=>{
+    el.classList.add('disabled');
+    if(idx===q.ans) el.classList.add('correct');
+    else if(idx===i&&!ok) el.classList.add('wrong');
+  });
+  const fb=document.getElementById('quizFB');
+  fb.innerHTML=`<span class="fb-icon">${ok?'✓':'✗'}</span><span>${ok?q.ok:q.bad}</span>`;
+  fb.className='fb-box show '+(ok?'ok':'bad');
+  document.getElementById('qScoreTxt').textContent='Score: '+qScore+' / '+(qIdx+1);
+  document.getElementById('qNextBtn').style.display='inline-flex';
+  if(qIdx===QUESTIONS.length-1) document.getElementById('qNextBtn').textContent='See Results →';
+}
+function nextQ(){
+  qIdx++;
+  if(qIdx>=QUESTIONS.length){showQuizDone();return;}
+  showQ();
+}
+function showQuizDone(){
+  document.getElementById('quizActive').style.display='none';
+  document.getElementById('quizDone').style.display='block';
+  const pct=Math.round(qScore/QUESTIONS.length*100);
+  sectionScores.quiz={earned:qScore,possible:QUESTIONS.length};
+  document.getElementById('qBadge').innerHTML=`<span class="badge ${pct>=70?'b-green':'b-red'}">${qScore}/${QUESTIONS.length} · ${pct}%</span>`;
+  document.getElementById('qMsg').textContent=pct>=70
+    ?`Strong work! You scored ${pct}%. You understand what frameworks provide, how the four categories differ, and how to match tools to project constraints.`
+    :`You scored ${pct}%. Review the Framework Categories and Platform Canvas sections, then try again. Focus on what distinguishes each category and why selection is a strategic, not technical, decision.`;
+  if(pct>=70) markDone('quiz');
+}
+
+// ─── RESULTS ─────────────────────────────────────────────────────────────────
+function buildResults(){
+  markDone('results');
+  const te=Object.values(sectionScores).reduce((s,x)=>s+(x.earned||0),0);
+  const tp=Object.values(sectionScores).reduce((s,x)=>s+(x.possible||0),0);
+  const pct=tp>0?Math.round((te/tp)*100):0;
+  const grade=pct>=90?{l:'Framework Strategist',e:'🏆',m:'Outstanding ecosystem mastery.'}:
+              pct>=70?{l:'Platform Architect',   e:'🔧',m:'Solid understanding. Review what you missed.'}:
+              pct>=50?{l:'Tool Explorer',         e:'📚',m:'Good start — revisit the categories section.'}:
+                      {l:'Explorer',              e:'🔍',m:'Keep learning — re-read the core concepts.'};
+  const circ=2*Math.PI*52, dash=circ*(1-pct/100);
+  const breakdown=[
+    {key:'cats',  label:'Framework Category Matching'},
+    {key:'canvas',label:'Platform Comparison Canvas'},
+    {key:'select',label:'Framework Selection Scenarios'},
+    {key:'quiz',  label:'Knowledge Check Quiz'},
+  ];
+  const rows=breakdown.map(item=>{
+    const s=sectionScores[item.key]; if(!s) return '';
+    const p=Math.round((s.earned/s.possible)*100);
+    const col=p>=80?'var(--green)':p>=50?'var(--yellow)':'var(--GA-red)';
+    return `<div class="score-row">
+      <div class="score-dot" style="background:${col}"></div>
+      <span style="flex:1;font-size:.9rem;font-weight:500;color:var(--gray-lt)">${item.label}</span>
+      <div class="score-bar-wrap"><div class="score-bar-fill" style="width:${p}%;background:${col}"></div></div>
+      <span style="font-size:.82rem;color:var(--gray);min-width:38px;text-align:right">${s.earned}/${s.possible}</span>
+      <span class="badge" style="background:${p>=80?'rgba(34,197,94,.15)':p>=50?'rgba(245,197,24,.15)':'rgba(232,51,58,.15)'};color:${col};min-width:38px;text-align:center">${p}%</span>
+    </div>`;
+  }).join('');
+  const takeaways=[
+    'Frameworks operationalize agent theory — they provide loop orchestration, tool integration, memory, and error handling so you build agents instead of infrastructure.',
+    'GPTs Builder is best for beginners. Flowise offers open-source flexibility. Zapier AI is best when the agent must connect many SaaS tools. None is universally superior.',
+    'Framework selection is a strategic decision, not a technical one. Define architecture first. Match the tool to the constraint — complexity, team expertise, control, and security.',
+  ].map((t,i)=>`<div class="takeaway-item"><div class="tk-num">0${i+1}</div><div class="tk-txt">${t}</div></div>`).join('');
+  document.getElementById('resultsBody').innerHTML=`
+    <div style="display:flex;align-items:center;gap:28px;flex-wrap:wrap;padding-bottom:36px;border-bottom:1px solid var(--line);margin-bottom:32px">
+      <div class="results-ring">
+        <svg width="120" height="120" style="transform:rotate(-90deg)" viewBox="0 0 120 120">
+          <circle cx="60" cy="60" r="52" fill="none" stroke="var(--black3)" stroke-width="8"/>
+          <circle cx="60" cy="60" r="52" fill="none" stroke="var(--GA-red)" stroke-width="8"
+            stroke-dasharray="${circ.toFixed(1)}" stroke-dashoffset="${dash.toFixed(1)}"
+            stroke-linecap="round" style="transition:stroke-dashoffset 1.2s ease"/>
+        </svg>
+        <div class="results-ring-txt"><div class="ring-pct">${pct}%</div><div class="ring-sub">score</div></div>
+      </div>
+      <div>
+        <div style="font-size:2rem;margin-bottom:4px">${grade.e}</div>
+        <h2 style="font-size:clamp(2rem,5vw,2.8rem);margin-bottom:6px">${grade.l}</h2>
+        <p style="color:var(--gray-lt);font-size:.95rem">${grade.m}</p>
+        <p style="color:var(--gray-dk);font-size:.82rem;margin-top:6px;font-family:'JetBrains Mono',monospace">${te} pts earned · ${tp} pts possible</p>
+      </div>
+    </div>
+    <span class="eyebrow">Score Breakdown</span>
+    <div class="card" style="padding:8px 20px;margin-bottom:28px">${rows}</div>
+    <span class="eyebrow">Key Takeaways</span>
+    <div class="card" style="padding:8px 20px;margin-bottom:24px">${takeaways}</div>
+    <div style="background:rgba(34,197,94,.06);border:1px solid rgba(34,197,94,.2);border-radius:var(--r-lg);padding:20px">
+      <p style="font-size:.92rem;color:var(--gray-lt);line-height:1.7">
+        🎉 <strong style="color:#fff">Well done!</strong> You've completed Agentic AI Frameworks and Ecosystems.<br/>
+        Next module: <strong style="color:#fff">Use Cases Across Industries</strong> — where you'll apply framework selection to real-world healthcare, finance, and operations problems.
+      </p>
+    </div>`;
+}
+</script>
+</body>
+</html>
