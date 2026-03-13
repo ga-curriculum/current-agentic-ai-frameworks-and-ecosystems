@@ -402,4 +402,4 @@ How likely is this agent to grow in complexity, integrate new tools, or be maint
 
 ---
 
-*General Assembly · Build AI Agents · BAA 16.0 · © 2026*
+*General Assembly · Build AI Agents · BAA 4.0 · © 2026*
