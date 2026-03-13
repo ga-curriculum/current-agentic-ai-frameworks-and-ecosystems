@@ -372,7 +372,7 @@ How likely is this agent to grow in complexity, integrate new tools, or be maint
 
 ## 5. Lab (60 min)
 
-- https://pages.git.generalassemb.ly/Build-AI-Agents/Use-Cases-Across-Industries/
+- https://pages.git.generalassemb.ly/Build-AI-Agents/Current-Agentic-AI-Frameworks-and-Ecosystems/
 
 ---
 
