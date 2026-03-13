@@ -398,3 +398,8 @@ How likely is this agent to grow in complexity, integrate new tools, or be maint
 - [Dust Documentation](https://docs.dust.tt/)
 - [OpenAI GPT Builder Guide](https://platform.openai.com/docs/assistants/overview)
 - Lilian Weng — *LLM-powered Autonomous Agents* (2023) — [lilianweng.github.io](https://lilianweng.github.io/posts/2023-06-23-agent/)
+
+
+---
+
+*General Assembly · Build AI Agents · BAA 16.0 · © 2026*
